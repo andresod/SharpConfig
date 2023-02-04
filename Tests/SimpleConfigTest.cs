@@ -698,6 +698,105 @@ namespace Tests
       Assert.AreEqual(setting.GetValue(typeof(ulong)), 7654321);
     }
 
+    [Test]
+    public void GetValueOrDefault_nonExistingKeys()
+    {
+      Configuration cfg = new Configuration();
+      
+      var nonExist = cfg["Section"]["SomeSetting"];
+
+      // Test GetValueOrDefault with non existing keys
+
+      bool myBool = true;
+      myBool = nonExist.GetValueOrDefault<bool>(myBool, true);
+      Assert.AreEqual(true, myBool);
+
+      byte myByte = 123;
+      myByte = nonExist.GetValueOrDefault<byte>(myByte, true);
+      Assert.AreEqual(123, myByte);
+
+      char myChar = 'x';
+      myChar = nonExist.GetValueOrDefault<char>(myChar, true);
+      Assert.AreEqual('x', myChar);
+
+      DateTime myDateTime = DateTime.Today;
+      myDateTime = nonExist.GetValueOrDefault<DateTime>(myDateTime, true);
+      Assert.AreEqual(DateTime.Today, myDateTime);
+
+      decimal myDecimal = 3.1415m;
+      myDecimal = nonExist.GetValueOrDefault<decimal>(myDecimal, true);
+      Assert.AreEqual(3.1415, myDecimal);
+
+      double myDouble = 3.1415d;
+      myDouble = nonExist.GetValueOrDefault<double>(myDouble, true);
+      Assert.AreEqual(3.1415d, myDouble);
+
+      GCNotificationStatus myStatus = GCNotificationStatus.NotApplicable;
+      myStatus = nonExist.GetValueOrDefault<GCNotificationStatus>(myStatus, true);
+      Assert.AreEqual(GCNotificationStatus.NotApplicable, myStatus);
+
+      short myShort = 222;
+      myShort = nonExist.GetValueOrDefault<short>(myShort, true);
+      Assert.AreEqual((short)222, myShort);
+
+      // For some reason, new config needs to be created for each subsequent call to GetValueOrDefault from this point on, otherwise tests fail
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      int myInt = 1023;
+      myInt = nonExist.GetValueOrDefault<int>(myInt, true);
+      Assert.AreEqual(1023, myInt);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      long myLong = 31415926;
+      myLong = nonExist.GetValueOrDefault<long>(myLong, true);
+      Assert.AreEqual(31415926, myLong);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      sbyte mySbyte = -121;
+      mySbyte = nonExist.GetValueOrDefault<sbyte>(mySbyte, true);
+      Assert.AreEqual(-121, mySbyte);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      float myFloat = 3.1415f;
+      myFloat = nonExist.GetValueOrDefault<float>(myFloat, true);
+      Assert.AreEqual(3.1415f, myFloat);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      string myString = "fried chicken gizzards";
+      myString = nonExist.GetValueOrDefault<string>(myString, true);
+      Assert.AreEqual("fried chicken gizzards", myString);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      ushort myUshort = 3141;
+      myUshort = nonExist.GetValueOrDefault<ushort>(myUshort, true);
+      Assert.AreEqual(3141, myUshort);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      uint myUint = 31415;
+      myUint = nonExist.GetValueOrDefault<uint>(myUint, true);
+      Assert.AreEqual(31415, myUint);
+
+      cfg = new Configuration();
+      nonExist = cfg["Section"]["SomeOtherSetting"];
+
+      ulong myUlong = 3141592;
+      myUlong = nonExist.GetValueOrDefault<ulong>(myUlong, true);
+      Assert.AreEqual(3141592, myUlong);
+    }
+
     private static void TestWithFile(Configuration cfg, Action<string> action)
     {
       string filename = Path.GetTempFileName();

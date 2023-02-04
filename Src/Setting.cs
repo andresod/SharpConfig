@@ -487,7 +487,7 @@ namespace SharpConfig
 
       var result = CreateObjectFromString(RawValue, type, true);
 
-      if (result != null)
+      if (result != null && RawValue != string.Empty)
       {
         return (T)result;
       }
